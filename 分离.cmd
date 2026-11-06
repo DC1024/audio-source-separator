@@ -1,7 +1,9 @@
 @echo off
+chcp 65001 >nul
 setlocal enabledelayedexpansion
-set "HF_HOME=D:\AI\audiosep\hf_cache"
-set "ROOT=D:\AI\audiosep"
+set "ROOT=%~dp0"
+set "ROOT=%ROOT:~0,-1%"
+set "HF_HOME=%ROOT%\hf_cache"
 cd /d "%ROOT%"
 
 set "INPUT=%~1"
@@ -10,31 +12,31 @@ set "PROMPT=%~2"
 if "%INPUT%"=="" (
   echo.
   echo   ============================================================
-  echo    ��Դ���빤�� ^(SAM-Audio^)
+  echo    音源分离工具 ^(SAM-Audio^)
   echo   ============================================================
   echo.
-  echo    ����Ƶ/��Ƶ�ļ�ֱ���ϵ������ڣ�Ȼ��س���
-  echo    Ҳ���԰��ļ��ϵ��� cmd �ļ�ͼ���ϡ�
+  echo    把音频/视频文件直接拖到本窗口，然后回车。
+  echo    也可以把文件拖到本 cmd 文件图标上。
   echo.
-  set /p "INPUT=  �ļ�·��: "
+  set /p "INPUT=  文件路径: "
 )
 
 if "%INPUT%"=="" (
-  echo   û�������ļ����˳���
+  echo   没有输入文件，退出。
   pause
   exit /b 1
 )
 
-rem ȥ�����ܴ��ڵ�����
+rem 去掉可能存在的引号
 set "INPUT=!INPUT:"=!"
 
 if "%PROMPT%"=="" set "PROMPT=car engine"
 
 echo.
-echo   �ļ�   : !INPUT!
-echo   ��ʾ�� : %PROMPT%
+echo   文件   : !INPUT!
+echo   提示词 : %PROMPT%
 echo.
-echo   ģ�ͼ���Լ�� 20 �롣����Ƶ���Զ��жδ�����ÿ 15 ����ƵԼ�� 40 �룬����رմ��ڡ�
+echo   模型加载约需 35 秒。长音频会自动切段处理，128 秒素材约 25 秒跑完，请勿关闭窗口。
 echo.
 
 for %%F in ("!INPUT!") do (
@@ -45,9 +47,9 @@ sam-audio\.venv\Scripts\python.exe batch.py "!INPUT!" -p "%PROMPT%" -o "!OUTDIR!
 
 echo.
 if errorlevel 1 (
-  echo   ����ʧ�ܣ��������ı����������֡�
+  echo   处理失败，请把上面的报错发给助手。
 ) else (
-  echo   ��ɣ����Ŀ¼��
+  echo   完成，输出目录：
   echo   !OUTDIR!
   echo.
   if exist "!OUTDIR!" explorer "!OUTDIR!"
