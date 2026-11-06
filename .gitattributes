@@ -1,0 +1,11 @@
+# Windows 批处理必须是 CRLF，否则部分 cmd 解析器会在标签/括号处出错
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# 其余按平台默认，仓库内统一 LF
+*.py   text eol=lf
+*.md   text eol=lf
+*.html text eol=lf
+*.sh   text eol=lf
+
+*.png  binary

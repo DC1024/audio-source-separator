@@ -1,0 +1,33 @@
+# 模型权重（11GB，各自从 HF 或镜像单独下载）
+models/
+hf_cache/
+.checkpoints/
+
+# 上游仓库（自行 clone，见 README 安装段落）
+sam-audio/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 运行时产物
+ui_work/
+out/
+separated/
+*.log
+
+# 演示音源
+samples/
+
+# 本机部署/调试脚本（写死了本机路径与代理端口，不进仓库）
+install.sh
+rebuild.sh
+prefetch.py
+_shot.py
+
+# 系统
+.DS_Store
+Thumbs.db
+desktop.ini
